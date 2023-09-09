@@ -10,26 +10,43 @@ class Value:
     """Value class"""
 
     def __init__(self, data, _children=[], _op=""):
+        """Constructor for the Value class
+
+        Parameters
+        ----------
+        data : int, float, np.int64, np.float64
+            The data of the value
+        _children : list, optional
+            The children of the value, by default []
+        _op : str, optional
+            The operation that was used to create the value, by default ""
+        """
         self.data = data
         self._prev = set(_children)
         self._op = _op
 
     def __repr__(self):
+        """Representation of the value object."""
         return f"Value(data={self.data})"
 
     def __add__(self, other):
+        """Addition of two values."""
         return Value(self.data + other.data, (self, other), _op="+")
 
     def __sub__(self, other):
+        """Subtraction of two values."""
         return Value(self.data - other.data, (self, other), _op="-")
 
     def __mul__(self, other):
+        """Multiplication of two values"""
         return Value(self.data * other.data, (self, other), _op="*")
 
     def __truediv__(self, other):
+        """Division of two values"""
         return Value(self.data / other.data, (self, other), _op="/")
 
     def __pow__(self, other):
+        """Power of two values"""
         assert isinstance(
             other, (int, float, np.int64, np.float64, Value)
         ), "Power must be a number"
